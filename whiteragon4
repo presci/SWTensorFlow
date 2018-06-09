@@ -1,0 +1,14 @@
+source ./import.sh
+
+MAP_X=100 
+MAP_Y=1048
+ATTACK_X=1750
+ATTACK_Y=956
+
+adb -s ${DEVICE} shell input touchscreen swipe 301 300 500 1000 100 && \
+    adb -s ${DEVICE} shell input touchscreen swipe 300 300 500 1000 100  && \
+    adb -s ${DEVICE} shell input touchscreen swipe 300 300 500 1000 100 && \
+    adb -s ${DEVICE} shell input touchscreen swipe 300 300 500 1000 100  && \
+    devtap 1026 177 && \
+    devtap  $ATTACK_X $ATTACK_Y
+ 

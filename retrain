@@ -1,0 +1,7 @@
+python retrain.py \
+--bottleneck_dir=/home/prasad/workspace/summonerswar/tf_files_1/bottlenecks \
+--how_many_training_steps=500 \
+--model_dir=/home/prasad/workspace/summonerswar/tf_files_1/inception \
+--output_graph=/home/prasad/workspace/summonerswar/tf_files_1/retrained_graph.ph \
+--output_labels=/home/prasad/workspace/summonerswar/tf_files_1/retrained_labels.txt \
+--image_dir /data/images

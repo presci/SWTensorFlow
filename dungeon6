@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+source ./import.sh
+
+adb -s ${DEVICE} shell input touchscreen swipe 301 300 500 1000 100 && \
+    adb -s ${DEVICE} shell input touchscreen swipe 300 300 500 1000 100 && \
+    devtap 1064 900 && \
+    sleep 2 && \
+    adb -s  ${DEVICE} shell input touchscreen swipe 1034 396  1034 970 100 && \
+    adb -s  ${DEVICE} shell input touchscreen swipe 1034 970  1034 870 100 && \
+    devtap 1570 847
+
+

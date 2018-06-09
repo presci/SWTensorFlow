@@ -1,0 +1,30 @@
+convert replay001.jpg -crop 700x120+610+130 defeated0.jpg  # defeated label at the top
+convert home.jpg -crop 400x300+980+880 home01.jpg # home buttons
+convert regulardefeat.jpg -crop 700x120+610+130 regulardefeat0.jpg #defeat
+convert victory001.jpg -crop 640x100+640+130 victory0010.jpg # victory001
+
+
+
+
+python retrain.py \
+--bottleneck_dir=/home/prasad/workspace2/tensorflow0.1/tf_files/bottlenecks \
+--how_many_training_steps=500 \
+--model_dir=/home/prasad/workspace2/tensorflow0.1/tf_files/inception \
+--output_graph=/home/prasad/workspace2/tensorflow0.1/tf_files/retrained_graph.ph \
+--output_labels=/home/prasad/workspace2/tensorflow0.1/tf_files/retrained_labels.txt \
+--image_dir /home/prasad/workspace2/tensorflow0.1/images
+
+
+
+>>> from PIL import Image
+>>> img = Image.open("victory001.jpg")
+>>> height=640 + 640
+>>> width = 100 + 130
+>>> cropped_image = img.crop((640, 130, height, width))
+>>> cropped_image.save("discovery.jpg")
+
+
+
+>>> img0 = Image.open("victory001.jpg").convert('LA')
+>>> crop = img0.crop((640,130, height, width))
+>>> crop.save('discovery0.png');

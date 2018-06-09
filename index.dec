@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+<div id="message"></div>
+<div>
+    Device: <select id="device" name="device">
+        <option value="57122fc4">New Phone</option>
+        <option value="49d7d8c1">OldPhone</option>
+    </select>
+</div>
+<div id="battletime">
+<div>
+    Exit :<input type="checkbox" id="exit" name="exit" value="yes"/>
+</div>    
+<div>
+    No Rune :<input type="checkbox" id="norune" name="norune" value="yes"/>
+</div>    
+<div>
+    PVP :<input type="checkbox" id="pvp" name="pvp" value="yes"/>
+</div>
+<div>
+    Time: <input type="text" id="time" name="time" value="160"/>
+</div>
+<div>
+    <input type="button" id="client_start" value="client_start" onclick="clientStart()"/>
+    <input type="button" id="client_play" value="client_play" onclick="clientPlay()"/>
+</div>
+</div>
+<div id="logindiv">
+    <div>
+    login: <select id="login" name="login">
+        <option value="BR1CKED">BR1CKED</option>
+        <option value="Cbarr00">Cbarr00</option>
+        <option value="cammysfv0">cammysfv0</option>
+    </select>
+    </div>
+    <div>
+    <input type="button" id="login" value="loginbutton" onclick="login()"/>
+    <input type="button" id="kill" value="Kill Button" onclick="client_kill()"/>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var postdata= (function(url, data, func){
+        var httpRequest = new XMLHttpRequest();
+        if ( !httpRequest) {
+            message.innerHTML= "Can't make XMLHttpRequest giving up";
+            return;
+        }
+        httpRequest.onreadystatechange=(function(){
+            if ( httpRequest.readyState == XMLHttpRequest.DONE){
+                if( httpRequest.status == 200){
+                   func(0, httpRequest.responseText);
+                }else if ( httpRequest.status >= 400){
+                    func(1, httpRequest.responseText);
+                }else {
+                    func(2, "something went wrong");
+                }
+            }
+       });
+        httpRequest.open('POST', url);
+        httpRequest.setRequestHeader('Content-Type', 'application/json');
+        httpRequest.send(JSON.stringify(data));
+    });
+    var getdata = (function(url, func){
+        var httpRequest = new XMLHttpRequest();
+        if ( !httpRequest){
+            message.innerHTMl = "Can't make XMLHttpRequest giving up";
+            return;
+        }
+        httpRequest.onreadystatechange=(function(){
+            if ( httpRequest.readyState == XMLHttpRequest.DONE){
+                if( httpRequest.status == 200){
+                   func(0, httpRequest.responseText);
+                }else if ( httpRequest.status >= 400){
+                    func(1, httpRequest.responseText);
+                }else {
+                    func(2, "something went wrong");
+                }
+            }            
+        });
+        httpRequest.open('GET', url);
+        httpRequest.setRequestHeader('Content-Type', 'application/json');
+        httpRequest.send();        
+    });
+
+
+    var login = (function(){
+        var data = {};
+        var d = document.getElementById('device');
+        data.device = d.options[d.selectedIndex].value;
+        var login = document.getElementById('login');
+        data.login = login.options[login.selectedIndex].value;
+        postdata('/mobile/login.json', data, func);
+
+
+    });
+
+    var func = (function(arg0, arg1){
+        if ( arg0 == 0 ){
+            document.getElementById('message').innerHTML = "Success";
+            return;
+        }
+        document.getElementById('message').innerHTML = "Something went wrong [" + arg1 + "]";
+    });
+
+    var clientStart=(function(){
+        var data = {};
+        var d = document.getElementById('device');
+        data.device = d.options[d.selectedIndex].value;
+        if (document.getElementById('exit').checked)
+            data.exit='y';
+        if ( document.getElementById('norune').checked)
+            data.norune='y';
+        if ( document.getElementById('pvp').checked)
+            data.pvp='y';
+        data.time=document.getElementById('time').value;
+        postdata('/mobile/clientstart.json', data, func);
+    });
+
+    var clientPlay = (function(){
+    });
+
+    var client_kill=(function(){
+        var d = document.getElementById('device');
+        var device = d.options[d.selectedIndex].value;
+        getdata('/mobile/kill/' + device, func)
+
+    });
+
+
+</script>
+</body>
+</html>
