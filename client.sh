@@ -435,43 +435,43 @@ while true; do
 			    echo "Changing monster 1"
 			    devtap   300 398 && \
 				storage && \
-				devtap 1500 630
+				devtap 1500 630 && devtap 950 950
 			    ;;
 			2)
 			    echo "Changing monster 2"
 			    devtap   694 398 && \
 				storage && \
-				devtap 1500 630
+				devtap 1500 630 && devtap 950 950
 			    ;;
 			3)
 			    echo "Changing monster 12"
 			    devtap 300 398 && devtap 694 398 && \
 				storage && \
-				devtap 1500 630 && devtap 1350 630
+				devtap 1500 630 && devtap 1350 630 && devtap 950 950
 			    ;;
 			4)
 			    echo "Changing monster 3"
 			    devtap   498 498 && \
 				storage && \
-				devtap   1500 630
+				devtap   1500 630 && devtap 950 950
 			    ;;
 			5)
 			    echo "Changing monster 23"
 			    devtap 300 398 && devtap 498 498 && \
 				storage && \
-				devtap 1500 630 && devtap 1350 630 
+				devtap 1500 630 && devtap 1350 630 && devtap 950 950
 			    ;;
 			6)
 			    echo "Changing monster 23"
 			    devtap   694 398 && devtap 498 498 && \
 				storage && \
-				devtap 1500 630 && devtap 1350 630
+				devtap 1500 630 && devtap 1350 630 && devtap 950 950
 			    ;;
 			7)
 			    echo "Changing monster 123"
 			    devtap 300 398 && devtap 694 398 && devtap 498 498 && \
 				storage && \
-				devtap 1500 630 && devtap 1350 630 && devtap 1200 630
+				devtap 1500 630 && devtap 1350 630 && devtap 1200 630 && devtap 950 950
 			    ;;
 			*)
 			    echo "none found"

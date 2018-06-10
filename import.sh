@@ -17,7 +17,7 @@ getroadie(){
 }
 getscr(){
     adb -s ${DEVICE} shell screencap -p /sdcard/${IMAGE}.png && \
-        adb -s ${DEVICE} pull /sdcard/${IMAGE}.png && \
+        adb -s ${DEVICE} pull /sdcard/${IMAGE}.png  && \
         adb  -s ${DEVICE} shell rm /sdcard/${IMAGE}.png && \
         convert ${IMAGE}.png ${IMAGE}.jpg && \
         rm ${IMAGE}.png
@@ -69,10 +69,9 @@ sleepme() {
     while [[ T -gt 0 ]]; do
 	sleep 10
 	T=$(( T - 10 ))
-	echo -ne "."
 	getscr
 	OPT=$(wget -qO- http://localhost:9009/detect/image/${IMAGE})
-	echo "sleepme -- [${OPT}]"
+	#echo "sleepme -- [${OPT}]"
 	case $OPT in
 	    "0x5"|"0x1"|"0x6"|"0x2"|"0x8"|"0x100")
 		echo "sleepme--victory|defeat [$OPT]"
@@ -97,7 +96,7 @@ sleepme() {
 		return 0
 		;;
 	    *)
-		echo "do nothing"
+		echo -ne "."
 	esac
     done 
     return 0
