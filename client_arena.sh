@@ -80,6 +80,7 @@ while true; do
         if [ $COUNT -gt 3 ]; then
 	    echo "Refreshing list"
 	    if [[ "$PVPAWAY" == "PVPAWAY" && "$PVPAWAY_BOOL" == "0" ]]; then
+		mutt  -s "pvpaway" c.bar@mail.ru < monster.txt -a "${DEVICE}.jpg"
 		echo "PVP Away triggered"
 		exit 0
 	    fi

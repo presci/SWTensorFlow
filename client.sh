@@ -18,7 +18,7 @@ IMAGE=0
 DEVICE=0
 TESTME=0
 PVP=0
-BATTLETIME=90
+BATTLETIME=480
 MAP_ATTACK=0
 ARENA_DONE=1
 EXITFUNC=0
@@ -44,12 +44,15 @@ DELAYED=0
 COMMAND=0
 SELL=0
 CHECKSTATUS=0
+ENERGY=0
 
     while [[ $# -gt 0 ]]; do
         key="$1"
         echo "next $key"
         case $key in
-	    
+	    -e=*)
+		ENERGY="${key#*=}"
+		;;
             --na=*)
                 NA="${key#*=}"
                 if [ "$NA" == "new" ]; then
@@ -203,7 +206,7 @@ CHECKSTATUS=0
                 shift
                 IMAGE=$1
                 ;;
-            --power=*)
+            -power=*)
                 PWR="${key#*=}"
                 devtap  630 360 && sleep 5 
                 while [[ $PWR -gt  0 ]]; do
@@ -305,14 +308,11 @@ ERRORCOUNT=0
 LASTOPT=0
 
 if [ "${TESTME}" == "TESTME" ]; then
-    devtap 130 770 && devtap 600 230 && \
-	sleep 2 && devtap 475 480
-    for i in {1..4}; do
-        adb -s ${DEVICE} shell input touchscreen swipe 1000 700 1000 300  100
-    done
-    devtap 1500 630 && devtap 1350 630 && devtap 1200 630
-    
-	     
+		devtap 800 650 && sleep 2 && \
+		 devtap 800 600 && sleep 2 && \
+		 devtap 750 650 && sleep 2 && \
+		 devtap 950 650 && sleep 2 && \
+		 devtap 950 900 && sleep 2
     exit 0
 fi
 
@@ -529,6 +529,7 @@ while true; do
             devtap  1629 757 && \
             sleep 1
         elif [ "rune" == "$OPT" ]; then
+	    cp "${DEVICE}.jpg" "${DEVICE}-rune.jpg"
             if [ "RUNE" == "$RUNE" ]; then
                 devtap   1209 915 && sleep 2
                 continue
@@ -563,6 +564,7 @@ while true; do
             
             continue
         elif [ "monster" == "$OPT" ]; then
+	    mutt  -s "Test from mutt" c.bar@mail.ru < monster.txt -a "${DEVICE}.jpg"
             MONSTER_CT=$(( MONSTER_CT + 1 ))
             devtap  1006 881 && \
             sleep 2
@@ -580,12 +582,24 @@ while true; do
                 continue
             fi
             echo "Keeping rune" && devtap  1186 664 && \
+		mutt  -s "[SummonersWar]5 Star ${DEVICE}" c.bar@mail.ru < 5Star.txt -a "${DEVICE}-rune.jpg" && \
             	devtap   1209 915 && \
             	sleep 2
         elif [ "home" == "$OPT" ]; then
             devtap 1100 987 && \
                 sleep 2
         elif [ "noenergy" == "$OPT" ]; then
+	    if [ $ENERGY -gt 0 ]; then
+		ENERGY=$(( ENERGY - 1 ))
+		devtap 800 650 && sleep 2 && \
+		    devtap 800 600 && sleep 2 && \
+		    devtap 750 650 && sleep 2 && \
+		    devtap 950 650 && sleep 2 && \
+		    devtap 950 900 && sleep 2
+		OPT="0"
+		continue
+	    fi
+	    
             if [ "EXITFUNC" == "$EXITFUNC" ];then
                 source ./exitfunc.sh
             else 

@@ -71,9 +71,9 @@ sleepme() {
 	T=$(( T - 10 ))
 	getscr
 	OPT=$(wget -qO- http://localhost:9009/detect/image/${IMAGE})
-	#echo "sleepme -- [${OPT}]"
+	echo "sleepme -- [${OPT}]"
 	case $OPT in
-	    "0x5"|"0x1"|"0x6"|"0x2"|"0x8"|"0x100")
+	    "0x5"|"0x1"|"0x6"|"0x2"|"0x8"|"0x100"|"0xd")
 		echo "sleepme--victory|defeat [$OPT]"
 		if [ "SELECT" == "$SELECT"  ] ; then
 		    MAXLEVEL=$(wget -qO- http://localhost:9009/detect/maxlevel/${IMAGE})
@@ -96,7 +96,7 @@ sleepme() {
 		return 0
 		;;
 	    *)
-		echo -ne "."
+		echo ".  ${OPT}" >> /dev/null
 	esac
     done 
     return 0
